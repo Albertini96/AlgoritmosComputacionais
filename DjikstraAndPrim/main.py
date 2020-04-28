@@ -42,7 +42,14 @@ class Graph:
                     if self.orientation == E.ORIENTED:
                         if self.structureKind == E.SPARSE:
                             
-                            if (i%3 == 0 or i%2 != 0):
+                            edg = 0
+                            for e in range(self.numberNodes):
+                                if self.graph[i][j] != None:
+                                    edg += 1
+                                if edg == 2:
+                                    break
+                            
+                            if edg < 2:
                                 self.addEdge(i, j, randint(1, 1000), E.ORIENTED)
                             
                         else:
@@ -52,13 +59,19 @@ class Graph:
                         if self.graph[i][j] == None:
                             
                             if self.structureKind == E.SPARSE:
-                                if (i%3 == 0 or i%2 != 0):
-                                    self.addEdge(i, j, randint(1, 1000), E.UNORIENTED)
+                                edg = 0
+                                for e in range(self.numberNodes):
+                                    if self.graph[i][j] != None:
+                                        edg += 1
+                                    if edg == 2:
+                                        break
+                                
+                                if edg < 2:
+                                    self.addEdge(i, j, randint(1, 1000), E.ORIENTED)
                             else:
 
                                 self.addEdge(i, j, randint(1, 1000), E.UNORIENTED)
 
-        print(self.graph)
     
         return self
 
@@ -94,8 +107,18 @@ class Prim():
                     ret[j] = u
                     nodeKey[j] = self.graph.graph[u][j]
                 
-        print(ret)
+
         return ret        
+    
+    def showResult(self):
+        
+        res = self.findRoute()
+        
+        print("from/to      weight")
+        for i in range(1, self.graph.numberNodes):
+            print(res[i], " - ", i , "       " , self.graph.graph[i][res[i]])
+            
+    	
 
         
 class Djikstra():
@@ -128,23 +151,58 @@ class Djikstra():
 
                     ret[j] = ret[u] + self.graph.graph[u][j]
                 
-        print(ret)
+
         return ret   
             
     
     
     
-outLoop = 1
-innerLoop = 1
-numberOfNodes = 5
-structure = E.DENSE
-orientation = E.UNORIENTED
+outLoop = 15
+innerLoop = 20
+numberOfNodes = 3
+structure = E.SPARSE
+orientation = E.ORIENTED
+
+#g = Graph(8, 0, structure, E.UNORIENTED)
+#
+#g.addEdge(0, 1, 14, E.UNORIENTED)
+#g.addEdge(0, 2, 3, E.UNORIENTED)
+#g.addEdge(1, 3, 6, E.UNORIENTED)
+#g.addEdge(1, 2, 10, E.UNORIENTED)
+#g.addEdge(1, 4, 5, E.UNORIENTED)
+#g.addEdge(2, 5, 8, E.UNORIENTED)
+#g.addEdge(3, 4, 4, E.UNORIENTED)
+#g.addEdge(4, 5, 2, E.UNORIENTED)
+#g.addEdge(4, 6, 9, E.UNORIENTED)
+#g.addEdge(5, 7, 15, E.UNORIENTED)
+#
+#print(g.graph)
+#
+#Prim(g).showResult()
+
+#p = Graph(5, 0, structure, E.ORIENTED)
+#
+#p.addEdge(0, 1, 10, E.ORIENTED)
+#p.addEdge(0, 2, 5, E.ORIENTED)
+#p.addEdge(1, 2, 2, E.ORIENTED)
+#p.addEdge(1, 3, 1, E.ORIENTED)
+#p.addEdge(2, 1, 3, E.ORIENTED)
+#p.addEdge(2, 3, 9, E.ORIENTED)
+#p.addEdge(2, 4, 2, E.ORIENTED)
+#p.addEdge(3, 4, 4, E.ORIENTED)
+#p.addEdge(4, 0, 7, E.ORIENTED)
+#p.addEdge(4, 3, 6, E.ORIENTED)
+#
+#print(p.graph)
+#
+#Djikstra(p).findRoute()
+
 
 print('Algorithm;NumberOfNodes;TypeGraph;Orientation;Loops;Time')
 
 for i in range(outLoop):
     
-    numberOfNodes += numberOfNodes
+    numberOfNodes += 10
     currentGraph = Graph(numberOfNodes, 0, structure, orientation).getGraph()
     
     accTime = 0
