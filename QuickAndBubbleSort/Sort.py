@@ -40,28 +40,23 @@ def QuickDivide(vec, i, j, rand):
     t_j = j
     
     pivo = vec[random.randint(i,j)] if rand else vec[i]
-    
-    
-    while(t_i<=t_j):
+
+    while(t_i <= t_j):
         
         if (vec[t_i] <= pivo) : 
             t_i = t_i+1 
+            
         elif (vec[t_j] > pivo) :
             t_j = t_j-1
+            
         elif (t_i <= t_j):
+            
             aux = vec[t_i]
             vec[t_i] = vec[t_j]
             vec[t_j] = aux
             t_i = t_i + 1
             t_j = t_j - 1    
     
-#    for p in range(i, j):
-#        if vec[p] <= vec[pivo]:
-#            t_i = t_i + 1
-#            
-#            aux = vec[t_i]
-#            vec[t_i] = vec[p]
-#            vec[p] = aux
 
     a = vec[i]
     vec[i] = vec[t_j]
